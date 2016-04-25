@@ -16,8 +16,10 @@ int main()
 		<< OBJReaderDLL::OBJReader::Test(a, b)
 		<< endl;
 
-	char t;
-	cin >> t;
+	string s = "diamond.obj";
+	OBJReaderDLL::OBJReader::ReadFile(s);
+
+	cin.get();
 
     return 0;
 }
