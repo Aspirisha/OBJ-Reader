@@ -6,6 +6,20 @@
 
 namespace OBJReaderDLL
 {
+	OBJReader::OBJReader()
+	{
+		
+	}
+
+	OBJReader::~OBJReader()
+	{
+	}
+
+	std::string OBJReader::GetString()
+	{
+		return "Export test string";
+	}
+
 	struct Face
 	{
 		bool HasTextureVertices = false;
@@ -57,7 +71,7 @@ namespace OBJReaderDLL
 				if (keyword[1] == NULL)
 				{
 					if (!(iss >> vx >> vy >> vz)) { break; }
-					std::cout << "Wierzcholek: " << vx << ", " << vy << ", " << vz << std::endl;
+					std::cout << "Wierzcholek: " << std::fixed << vx << ", " << vy << ", " << vz << std::endl;
 				}
 				else if (keyword[1] == 'n')
 				{

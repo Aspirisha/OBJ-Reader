@@ -16,6 +16,10 @@ int main()
 		<< OBJReaderDLL::OBJReader::Test(a, b)
 		<< endl;
 
+	//cout << OBJReaderDLL::OBJReader::GetString() << endl;
+	//cin.get();
+	//return 0;
+
 	string s = "res\\diamond.obj";
 	cout << "OBJ 1:" << endl;
 	OBJReaderDLL::OBJReader::ReadFile(s);
