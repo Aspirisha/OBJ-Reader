@@ -36,14 +36,17 @@
     <ClInclude Include="OBJData.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="OBJFileParser.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="libs\vec2.hpp">
       <Filter>libs\glm</Filter>
     </ClInclude>
     <ClInclude Include="libs\vec3.hpp">
       <Filter>libs\glm</Filter>
+    </ClInclude>
+    <ClInclude Include="GeometryData.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="OBJFileParser.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -57,6 +60,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="OBJData.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GeometryData.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="OBJFileParser.cpp">

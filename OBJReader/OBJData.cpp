@@ -1,11 +1,15 @@
 #include "stdafx.h"
 #include "OBJData.h"
 
-struct Face3
+
+std::vector<glm::vec3> OBJData::FileVertices;
+std::vector<glm::vec3> OBJData::FileNormalVertices;
+std::vector<glm::vec2> OBJData::FileTextureVertices;
+
+std::vector<glm::vec3> OBJData::GetFileVertices()
 {
-	glm::vec3 Vertices, NormalVertices;
-	glm::vec2 TextureVertices;
-};
+	return OBJData::FileVertices;
+}
 
 OBJData::OBJData()
 {
