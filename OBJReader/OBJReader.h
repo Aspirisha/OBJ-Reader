@@ -12,6 +12,7 @@
 #include <iostream>
 
 #include "OBJData.h"
+#include "OBJFileParser.h"
 
 namespace OBJReaderDLL
 {
@@ -24,10 +25,9 @@ namespace OBJReaderDLL
 		~OBJReader();
 		static OBJREADER_API int Test(int a, int b);
 		static OBJREADER_API void ReadFile(std::string filepath);
-		static OBJREADER_API std::string GetString();
 
 		// factory?
-		static OBJREADER_API OBJData* getOBJ();
+		static OBJREADER_API OBJData* getOBJ(const char* filename);
 
 	private:
 

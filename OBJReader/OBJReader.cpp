@@ -15,9 +15,23 @@ namespace OBJReaderDLL
 	{
 	}
 
-	std::string OBJReader::GetString()
+	OBJData* OBJReader::getOBJ(const char* filename)
 	{
-		return "Export test string";
+		OBJData* o = nullptr;
+		try
+		{
+			OBJFileParser::ReadFile(filename);
+			o = OBJFileParser::Objects.front();
+		}
+		catch (const char* ex)
+		{
+			std::cerr << ex << std::endl;
+		}
+		catch (std::string ex)
+		{
+			std::cerr << ex << std::endl;
+		}
+		return o;
 	}
 
 	struct Face

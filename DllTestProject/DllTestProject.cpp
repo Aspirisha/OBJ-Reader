@@ -16,21 +16,47 @@ int main()
 		<< OBJReaderDLL::OBJReader::Test(a, b)
 		<< endl;
 
-	//cout << OBJReaderDLL::OBJReader::GetString() << endl;
-	//cin.get();
-	//return 0;
-
 	string s = "res\\diamond.obj";
-	cout << "OBJ 1:" << endl;
-	OBJReaderDLL::OBJReader::ReadFile(s);
-
 	s = "res\\cube no tx.obj";
-	cout << "OBJ 2:" << endl;
-	OBJReaderDLL::OBJReader::ReadFile(s);
+	//s = "res\\cube.obj";
+	cout << "OBJ 1:" << endl;
+	OBJData* o1;
+	o1 = OBJReaderDLL::OBJReader::getOBJ(s.c_str());
 
-	s = "res\\cube.obj";
-	cout << "OBJ 3:" << endl;
-	OBJReaderDLL::OBJReader::ReadFile(s);
+	if (o1 == nullptr)
+	{
+		cout << "Blad" << endl;
+	}
+	else
+	{
+
+		cout << o1->Name << endl;
+		// cannot access static member from here
+		//cout << OBJData::FileVertices[1].x << endl;
+		//for (auto var : o1->FileVertices)
+		//{
+		//	cout << "V: " << var.x << ', ' << var.y << ', ' << var.z << endl;
+		//}
+
+		for (auto var : o1->Faces)
+		{
+			cout << "F: ";
+			for (auto vi : var.VertexIndices)
+			{
+				cout << vi << ", ";
+			}
+			cout << endl;
+
+		}
+	}
+
+	//s = "res\\cube no tx.obj";
+	//cout << "OBJ 2:" << endl;
+	//OBJReaderDLL::OBJReader::ReadFile(s);
+
+	//s = "res\\cube.obj";
+	//cout << "OBJ 3:" << endl;
+	//OBJReaderDLL::OBJReader::ReadFile(s);
 
 	cin.get();
 

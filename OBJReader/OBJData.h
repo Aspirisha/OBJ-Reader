@@ -4,25 +4,32 @@
 #include "libs/glm/vec3.hpp"
 #include <vector>
 
-struct Face3;
+struct FaceN
+{
+	bool HasTextureVertices = false;
+	bool HasNormalVertices = false;
+
+	std::vector<int> VertexIndices;
+	std::vector<int> NormalIndices;
+	std::vector<int> TextureIndices;
+};
 
 class OBJData
 {
 public:
+	static std::vector<glm::vec3> FileVertices;
+	static std::vector<glm::vec3> FileNormalVertices;
+	static std::vector<glm::vec2> FileTextureVertices;
 	std::string Name;
+	std::vector<FaceN> Faces;
 
-	bool HasTextureVertices;
-	bool HasNormalVertices; // change to bitmask?
-
-	std::vector<glm::vec3> Vertices;
-	std::vector<glm::vec3> NormalVertices;
-	std::vector<glm::vec2> TextureVertices;
-
-	std::vector<Face3> Faces;
+	static std::vector<glm::vec3> GetFileVertices();
 
 	OBJData();
 	~OBJData();
 
+
 private:
 
 };
+
