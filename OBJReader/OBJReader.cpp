@@ -34,6 +34,25 @@ namespace OBJReaderDLL
 		return o;
 	}
 
+	std::vector<GeometryData*> OBJReader::getGeometryData(const char* filename)
+	{
+		std::vector<GeometryData*> gds;
+		try
+		{
+			OBJFileParser::ReadFile(filename);
+			gds = OBJFileParser::GetTriangualizedObjects();
+		}
+		catch (const char* ex)
+		{
+			std::cerr << ex << std::endl;
+		}
+		catch (std::string ex)
+		{
+			std::cerr << ex << std::endl;
+		}
+		return gds;
+	}
+
 	struct Face
 	{
 		bool HasTextureVertices = false;

@@ -12,6 +12,8 @@ struct FaceN
 	std::vector<int> VertexIndices;
 	std::vector<int> NormalIndices;
 	std::vector<int> TextureIndices;
+
+	unsigned int materialID;
 };
 
 class OBJData
@@ -20,7 +22,12 @@ public:
 	static std::vector<glm::vec3> FileVertices;
 	static std::vector<glm::vec3> FileNormalVertices;
 	static std::vector<glm::vec2> FileTextureVertices;
-	std::string Name;
+
+	static std::string MaterialLibrary;
+	//static std::vector<std::string> Materials;
+
+	static std::string Name; // 1 obiekt w pliku
+	std::string Material;
 	std::vector<FaceN> Faces;
 
 	static std::vector<glm::vec3> GetFileVertices();

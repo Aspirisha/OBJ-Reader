@@ -18,36 +18,49 @@ int main()
 
 	string s = "res\\diamond.obj";
 	s = "res\\cube no tx.obj";
-	//s = "res\\cube.obj";
-	cout << "OBJ 1:" << endl;
-	OBJData* o1;
-	o1 = OBJReaderDLL::OBJReader::getOBJ(s.c_str());
+	s = "res\\cube.obj";
+	s = "res\\cube multi material.obj";
 
-	if (o1 == nullptr)
+
+	cout << "OBJ Test" << endl;
+	vector<GeometryData*> objects = OBJReaderDLL::OBJReader::getGeometryData(s.c_str());
+
+	if (objects.empty())
 	{
 		cout << "Blad" << endl;
 	}
 	else
 	{
-
-		cout << o1->Name << endl;
-		// cannot access static member from here
-		//cout << OBJData::FileVertices[1].x << endl;
-		//for (auto var : o1->FileVertices)
-		//{
-		//	cout << "V: " << var.x << ', ' << var.y << ', ' << var.z << endl;
-		//}
-
-		for (auto var : o1->Faces)
+		for (auto ob : objects)
 		{
-			cout << "F: ";
-			for (auto vi : var.VertexIndices)
+			cout << "Tekstura obiektu: " << ob->Material << endl;
+			int faceNumber = 0;
+			for (auto var : ob->TriangleMesh)
 			{
-				cout << vi << ", ";
-			}
-			cout << endl;
+				cout << "Fejs " << ++faceNumber << ":" << endl;
+				//cout << "Wspolrzedne wiercholkow: ";
+				for (int i = 0; i < 3; i++)
+					cout << "V" << i+1 << " (" << var.VertexCoords[i].x << ", " << var.VertexCoords[i].y << ", " << var.VertexCoords[i].z << "), ";
+				cout << endl;
 
+				if (ob->HasNormalVertices)
+				{
+					//cout << "Wspolrzedne wiercholkow (normalne): ";
+					for (int i = 0; i < 3; i++)
+						cout << "VN" << i + 1 << " (" << var.NormalCoords[i].x << ", " << var.NormalCoords[i].y << ", " << var.NormalCoords[i].z << "), ";
+					cout << endl;
+				}
+				if (ob->HasTextureVertices)
+				{
+					//cout << "Wspolrzedne wiercholkow (tekstura): ";
+					for (int i = 0; i < 3; i++)
+						cout << "VT" << i + 1 << " (" << var.TextureCoords[i].x << ", " << var.TextureCoords[i].y << "), ";
+					cout << endl;
+				}
+			}
 		}
+
+
 	}
 
 	//s = "res\\cube no tx.obj";

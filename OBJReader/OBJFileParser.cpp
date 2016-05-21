@@ -15,14 +15,14 @@ OBJFileParser::~OBJFileParser()
 void OBJFileParser::ReadFile(std::string filepath)
 {
 	std::ifstream file(filepath);
-	std::string line, keyword;
+	std::string line, keyword, material, materialLib;
 	int lineNumber = 0;
 	OBJData* objectData = nullptr; // zmienic na wskaznik i new ??
 	//OBJData* currentObjectData = nullptr;
 
 	if (file.is_open())
 	{
-		//objectData = new OBJData();
+		objectData = new OBJData();
 
 		while (std::getline(file, line))
 		{
@@ -32,8 +32,10 @@ void OBJFileParser::ReadFile(std::string filepath)
 			double vx, vy, vz;
 			std::string objName;
 
-			if (iss.peek() == EOF || iss.peek() == ' ') continue; // blank line
-			if (iss.peek() == '#') continue; // test comment
+			// change these 2 to keyword condition ??
+			//if (iss.peek() == EOF || iss.peek() == ' ') continue; // blank line
+			//if (iss.peek() == '#') continue; // test comment
+			// oh yess
 			if (!(iss >> keyword))
 			{
 				throw "Error reading file at line: " + std::to_string(lineNumber);
@@ -42,20 +44,8 @@ void OBJFileParser::ReadFile(std::string filepath)
 				break;
 			} // error or blank line - TO check
 
-			if (keyword[0] == 'o' || keyword[0] == 'g')
-			{
-				if (!(iss >> objName))
-				{
-					throw "Error parsing object name at line: " + lineNumber;
-				}
-				if (objectData != nullptr)
-				{
-					OBJFileParser::Objects.push_back(objectData);
-				}
-				objectData = new OBJData();
-				objectData->Name = objName;
-
-			}
+			if (keyword.empty()) continue;
+			else if (keyword[0] == '#') continue;
 			else if (keyword[0] == 'v')
 			{
 				if (keyword[1] == 't')
@@ -103,7 +93,7 @@ void OBJFileParser::ReadFile(std::string filepath)
 					if (iss.peek() != '/') // texture v
 					{
 						if (!(iss >> ivt)) throw "Error parsing face at line: " + lineNumber;
-						f.HasTextureVertices = true; // no consitency! must affect following reads
+						f.HasTextureVertices = true; // no consitency! should (?) affect following reads
 
 						f.TextureIndices.push_back(ivt);
 
@@ -137,6 +127,42 @@ void OBJFileParser::ReadFile(std::string filepath)
 
 				objectData->Faces.push_back(f);
 			}
+			else if (keyword[0] == 'g')
+			{
+				//if (!(iss >> objName))
+				//{
+				//	throw "Error parsing group name at line: " + lineNumber;
+				//}
+			}
+			else if (keyword == "usemtl")
+			{
+				if (!(iss >> material)) throw "Error parsing material name at line: " + lineNumber;
+				if (!objectData->Material.empty())
+				{
+					OBJFileParser::Objects.push_back(objectData);
+				}
+				objectData = new OBJData();
+				objectData->Material = material;
+			}
+			else if (keyword[0] == 'o')
+			{
+				if (!(iss >> objName))
+				{
+					throw "Error parsing object name at line: " + lineNumber;
+				}
+				//if (!objectData->Name.empty())
+				//{
+				//	OBJFileParser::Objects.push_back(objectData);
+				//	objectData = new OBJData();
+				//}
+				OBJData::Name = objName;
+
+			}
+			else if (keyword == "mtlib")
+			{
+				if (!(iss >> materialLib)) throw "Error parsing mtlib at line: " + lineNumber;
+				OBJData::MaterialLibrary = materialLib;
+			}
 		}
 	}
 	else
@@ -150,9 +176,56 @@ void OBJFileParser::ReadFile(std::string filepath)
 
 std::vector<GeometryData*> OBJFileParser::GetTriangualizedObjects()
 {
-	//if (OBJFileParser::Objects.empty());
-		return std::vector<GeometryData*>();
-		
+	if (OBJFileParser::Objects.empty()) return std::vector<GeometryData*>();
+
+	std::vector<GeometryData*> geoDatavec;
+
+	for (auto obj : OBJFileParser::Objects)
+	{
+		GeometryData* gd;
+		gd = new GeometryData();
+		if (!obj->Material.empty())
+		{
+			gd->Material = obj->Material;
+		}
+
+		for (auto face : obj->Faces)
+		{
+			//gd.Faces = TriangulateFace(face);
+			for (unsigned int i = 2; i < face.VertexIndices.size(); i++)
+			{
+				Face3 f3;
+				f3.VertexCoords[0] = obj->FileVertices[face.VertexIndices[0] - 1]; // -1 for .obj file indexes
+				f3.VertexCoords[1] = obj->FileVertices[face.VertexIndices[i - 1] - 1];
+				f3.VertexCoords[2] = obj->FileVertices[face.VertexIndices[i] - 1];
+
+				if (face.HasTextureVertices)
+				{
+					gd->HasTextureVertices = true;
+					f3.TextureCoords[0] = obj->FileTextureVertices[face.TextureIndices[0] - 1];
+					f3.TextureCoords[1] = obj->FileTextureVertices[face.TextureIndices[i - 1] - 1];
+					f3.TextureCoords[2] = obj->FileTextureVertices[face.TextureIndices[i] - 1];
+				}
+				if (face.HasNormalVertices)
+				{
+					gd->HasNormalVertices = true;
+					f3.NormalCoords[0] = obj->FileNormalVertices[face.NormalIndices[0] - 1];
+					f3.NormalCoords[1] = obj->FileNormalVertices[face.NormalIndices[i - 1] - 1];
+					f3.NormalCoords[2] = obj->FileNormalVertices[face.NormalIndices[i] - 1];
+				}
+
+				gd->TriangleMesh.push_back(f3);
+			}
+		}
+		geoDatavec.push_back(gd);
+	}
+
+	return geoDatavec;
 	// TO DO
 
 }
+
+//std::vector<Face3> OBJFileParser::TriangulateFace(FaceN &face)
+//{
+//	for (auto v : face.NormalIndices);
+//}

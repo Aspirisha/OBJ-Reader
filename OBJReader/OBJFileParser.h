@@ -19,6 +19,7 @@ public:
 	static std::vector<GeometryData*> GetTriangualizedObjects();
 private:
 	//static std::vector<OBJData*> Objects;
+	static std::vector<Face3> TriangulateFace(FaceN &face);
 };
 
 

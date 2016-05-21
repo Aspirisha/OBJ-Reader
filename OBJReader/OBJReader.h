@@ -27,7 +27,9 @@ namespace OBJReaderDLL
 		static OBJREADER_API void ReadFile(std::string filepath);
 
 		// factory?
-		static OBJREADER_API OBJData* getOBJ(const char* filename);
+		static OBJREADER_API OBJData* getOBJ(const char* filename); // obsolete
+
+		static OBJREADER_API std::vector<GeometryData*> getGeometryData(const char* filename); // should not be std::vector
 
 	private:
 
