@@ -7,21 +7,8 @@
 
 using namespace std;
 
-int main()
+void Read(string s)
 {
-	int a = 2;
-	int b = 3;
-
-	cout << "a + b = "
-		<< OBJReaderDLL::OBJReader::Test(a, b)
-		<< endl;
-
-	string s = "res\\diamond.obj";
-	s = "res\\cube no tx.obj";
-	s = "res\\cube.obj";
-	s = "res\\cube multi material.obj";
-
-
 	cout << "OBJ Test" << endl;
 	vector<GeometryData*> objects = OBJReaderDLL::OBJReader::getGeometryData(s.c_str());
 
@@ -40,7 +27,7 @@ int main()
 				cout << "Fejs " << ++faceNumber << ":" << endl;
 				//cout << "Wspolrzedne wiercholkow: ";
 				for (int i = 0; i < 3; i++)
-					cout << "V" << i+1 << " (" << var.VertexCoords[i].x << ", " << var.VertexCoords[i].y << ", " << var.VertexCoords[i].z << "), ";
+					cout << "V" << i + 1 << " (" << var.VertexCoords[i].x << ", " << var.VertexCoords[i].y << ", " << var.VertexCoords[i].z << "), ";
 				cout << endl;
 
 				if (ob->HasNormalVertices)
@@ -62,6 +49,42 @@ int main()
 
 
 	}
+}
+
+int main()
+{
+	int a = 2;
+	int b = 3;
+
+	cout << "a + b = "
+		<< OBJReaderDLL::OBJReader::Test(a, b)
+		<< endl;
+
+	//string s[5];
+	vector<string> s;
+	int input = 0;
+	s.push_back( "res\\diamond.obj");
+	s.push_back("res\\cube no tx.obj");
+	s.push_back("res\\cube.obj");
+	s.push_back("res\\cube multi material.obj");
+	s.push_back("res\\capsule.obj"); // big
+
+	while (true)
+	{
+		cout << "e - wyjscie, nr plikow: " << endl;
+		for (int i = 0; i < s.size(); i++)
+		{
+			cout << i + 1 << " - " << s[i] << endl;
+		}
+		cin >> input;
+		if (input == 0) break;
+		else Read(s[input-1]);
+	}
+
+	return 0;
+
+
+
 
 	//s = "res\\cube no tx.obj";
 	//cout << "OBJ 2:" << endl;

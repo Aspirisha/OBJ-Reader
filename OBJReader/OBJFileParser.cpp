@@ -26,6 +26,7 @@ void OBJFileParser::ReadFile(std::string filepath)
 
 		while (std::getline(file, line))
 		{
+			if (line.empty()) continue; // blank line
 			std::istringstream iss(line);
 			lineNumber++;
 
@@ -38,13 +39,14 @@ void OBJFileParser::ReadFile(std::string filepath)
 			// oh yess
 			if (!(iss >> keyword))
 			{
+				if (line[0] == ' ') continue;
 				throw "Error reading file at line: " + std::to_string(lineNumber);
 				//if (keyword[0] == '#') continue; // ignore empty lines & comments)
 				//std::cerr << "Error reading file: " << filepath << std::endl; // make exception out of it!
 				break;
 			} // error or blank line - TO check
 
-			if (keyword.empty()) continue;
+			//if (keyword.empty()) continue;
 			else if (keyword[0] == '#') continue;
 			else if (keyword[0] == 'v')
 			{
@@ -73,7 +75,7 @@ void OBJFileParser::ReadFile(std::string filepath)
 					}
 				}
 			}
-			else if (keyword[0] == 'f')
+			else if (keyword[0] == 'f') // todo: change indexes here
 			{
 				FaceN f;
 
