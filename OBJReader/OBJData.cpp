@@ -6,10 +6,8 @@ std::vector<glm::vec3> OBJData::FileVertices;
 std::vector<glm::vec3> OBJData::FileNormalVertices;
 std::vector<glm::vec2> OBJData::FileTextureVertices;
 
-std::vector<glm::vec3> OBJData::GetFileVertices()
-{
-	return OBJData::FileVertices;
-}
+std::string OBJData::Name;
+std::string OBJData::MaterialLibrary;
 
 OBJData::OBJData()
 {
