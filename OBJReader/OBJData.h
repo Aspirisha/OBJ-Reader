@@ -23,14 +23,11 @@ public:
 	static std::vector<glm::vec3> FileNormalVertices;
 	static std::vector<glm::vec2> FileTextureVertices;
 
+	static std::string Name; // static bo 1 obiekt w pliku
 	static std::string MaterialLibrary;
-	//static std::vector<std::string> Materials;
 
-	static std::string Name; // 1 obiekt w pliku
 	std::string Material;
 	std::vector<FaceN> Faces;
-
-	static std::vector<glm::vec3> GetFileVertices();
 
 	OBJData();
 	~OBJData();

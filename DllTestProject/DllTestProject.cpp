@@ -53,22 +53,14 @@ void Read(string s)
 
 int main()
 {
-	int a = 2;
-	int b = 3;
-
-	cout << "a + b = "
-		<< OBJReaderDLL::OBJReader::Test(a, b)
-		<< endl;
-
-	//string s[5];
 	vector<string> s;
-	int input = 0;
 	s.push_back( "res\\diamond.obj");
 	s.push_back("res\\cube no tx.obj");
 	s.push_back("res\\cube.obj");
 	s.push_back("res\\cube multi material.obj");
 	s.push_back("res\\capsule.obj"); // big
 
+	int input;
 	while (true)
 	{
 		cout << "e - wyjscie, nr plikow: " << endl;
@@ -76,26 +68,12 @@ int main()
 		{
 			cout << i + 1 << " - " << s[i] << endl;
 		}
+		input = 0;
 		cin >> input;
-		if (input == 0) break;
+		if (input < 1 || input > s.size()) break;
 		else Read(s[input-1]);
 	}
 
 	return 0;
-
-
-
-
-	//s = "res\\cube no tx.obj";
-	//cout << "OBJ 2:" << endl;
-	//OBJReaderDLL::OBJReader::ReadFile(s);
-
-	//s = "res\\cube.obj";
-	//cout << "OBJ 3:" << endl;
-	//OBJReaderDLL::OBJReader::ReadFile(s);
-
-	cin.get();
-
-    return 0;
 }
 

@@ -17,8 +17,7 @@ void OBJFileParser::ReadFile(std::string filepath)
 	std::ifstream file(filepath);
 	std::string line, keyword, material, materialLib;
 	int lineNumber = 0;
-	OBJData* objectData = nullptr; // zmienic na wskaznik i new ??
-	//OBJData* currentObjectData = nullptr;
+	OBJData* objectData = nullptr;
 
 	if (file.is_open())
 	{
@@ -33,21 +32,13 @@ void OBJFileParser::ReadFile(std::string filepath)
 			double vx, vy, vz;
 			std::string objName;
 
-			// change these 2 to keyword condition ??
-			//if (iss.peek() == EOF || iss.peek() == ' ') continue; // blank line
-			//if (iss.peek() == '#') continue; // test comment
-			// oh yess
 			if (!(iss >> keyword))
 			{
 				if (line[0] == ' ') continue;
 				throw "Error reading file at line: " + std::to_string(lineNumber);
-				//if (keyword[0] == '#') continue; // ignore empty lines & comments)
-				//std::cerr << "Error reading file: " << filepath << std::endl; // make exception out of it!
 				break;
-			} // error or blank line - TO check
-
-			//if (keyword.empty()) continue;
-			else if (keyword[0] == '#') continue;
+			}
+			else if (keyword[0] == '#') continue; // ignore comments
 			else if (keyword[0] == 'v')
 			{
 				if (keyword[1] == 't')
@@ -129,13 +120,6 @@ void OBJFileParser::ReadFile(std::string filepath)
 
 				objectData->Faces.push_back(f);
 			}
-			else if (keyword[0] == 'g')
-			{
-				//if (!(iss >> objName))
-				//{
-				//	throw "Error parsing group name at line: " + lineNumber;
-				//}
-			}
 			else if (keyword == "usemtl")
 			{
 				if (!(iss >> material)) throw "Error parsing material name at line: " + lineNumber;
@@ -152,11 +136,6 @@ void OBJFileParser::ReadFile(std::string filepath)
 				{
 					throw "Error parsing object name at line: " + lineNumber;
 				}
-				//if (!objectData->Name.empty())
-				//{
-				//	OBJFileParser::Objects.push_back(objectData);
-				//	objectData = new OBJData();
-				//}
 				OBJData::Name = objName;
 
 			}
@@ -173,7 +152,6 @@ void OBJFileParser::ReadFile(std::string filepath)
 	}
 
 	OBJFileParser::Objects.push_back(objectData);
-	//return objectData;
 }
 
 std::vector<GeometryData*> OBJFileParser::GetTriangualizedObjects()
@@ -223,11 +201,4 @@ std::vector<GeometryData*> OBJFileParser::GetTriangualizedObjects()
 	}
 
 	return geoDatavec;
-	// TO DO
-
 }
-
-//std::vector<Face3> OBJFileParser::TriangulateFace(FaceN &face)
-//{
-//	for (auto v : face.NormalIndices);
-//}
