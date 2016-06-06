@@ -21,6 +21,14 @@ void OBJFileParser::ReadFile(std::string filepath)
 
 	if (file.is_open())
 	{
+		OBJFileParser::Objects.clear();
+		OBJData::FileVertices.clear();
+		OBJData::FileNormalVertices.clear();
+		OBJData::FileTextureVertices.clear();
+
+		OBJData::Name.clear();
+		OBJData::MaterialLibrary.clear();
+
 		objectData = new OBJData();
 
 		while (std::getline(file, line))
