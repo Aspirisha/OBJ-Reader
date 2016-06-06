@@ -9,7 +9,6 @@ using namespace std;
 
 void Read(string s)
 {
-	cout << "OBJ Test" << endl;
 	vector<GeometryData*> objects = OBJReaderDLL::OBJReader::getGeometryData(s.c_str());
 
 	if (objects.empty())
@@ -20,7 +19,7 @@ void Read(string s)
 	{
 		for (auto ob : objects)
 		{
-			cout << "Tekstura obiektu: " << ob->Material << endl;
+			cout << "\tTekstura obiektu: " << ob->Material << endl;
 			int faceNumber = 0;
 			for (auto var : ob->TriangleMesh)
 			{
@@ -58,7 +57,10 @@ int main()
 	s.push_back("res\\cube no tx.obj");
 	s.push_back("res\\cube.obj");
 	s.push_back("res\\cube multi material.obj");
+	s.push_back("res\\negative.obj");
 	s.push_back("res\\capsule.obj"); // big
+	s.push_back("res\\beretta magazine.obj");
+	s.push_back("res\\skyscraper.obj");
 
 	int input;
 	while (true)
@@ -71,7 +73,11 @@ int main()
 		input = 0;
 		cin >> input;
 		if (input < 1 || input > s.size()) break;
-		else Read(s[input-1]);
+		else
+		{
+			cout << "Dane odczytane z pliku OBJ: " << s[input - 1] << endl;
+			Read(s[input - 1]);
+		}
 	}
 
 	return 0;

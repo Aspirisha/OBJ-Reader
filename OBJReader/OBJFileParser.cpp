@@ -12,6 +12,14 @@ OBJFileParser::~OBJFileParser()
 {
 }
 
+inline void transformIndex(int &index)
+{
+	if (index > 0)
+		index -= 1;
+	else
+		index += OBJData::FileVertices.size();
+}
+
 void OBJFileParser::ReadFile(std::string filepath)
 {
 	std::ifstream file(filepath);
@@ -74,55 +82,61 @@ void OBJFileParser::ReadFile(std::string filepath)
 					}
 				}
 			}
-			else if (keyword[0] == 'f') // todo: change indexes here
+			else if (keyword[0] == 'f')
 			{
 				FaceN f;
 
-				int iv, ivn, ivt;
-				if (!(iss >> iv))
+				int indx;
+				if (!(iss >> indx))
 				{
 					throw "Error parsing face at line: " + lineNumber;
 				}
 
-				f.VertexIndices.push_back(iv);
+				transformIndex(indx);
+				f.VertexIndices.push_back(indx);
 
-				if (iss.peek() == '/')
+				if (iss.peek() == '/') // check for first slash inh v/t OR v//n OR v/t/n
 				{
-					//f.HasNormalVertices = true;
-					iss.ignore();
+					iss.ignore(); // discard first slash
 
-					if (iss.peek() != '/') // texture v
+					if (iss.peek() != '/') // check if there is a number after first slash -> texture v
 					{
-						if (!(iss >> ivt)) throw "Error parsing face at line: " + lineNumber;
+						if (!(iss >> indx)) throw "Error parsing face at line: " + lineNumber;
 						f.HasTextureVertices = true; // no consitency! should (?) affect following reads
-
-						f.TextureIndices.push_back(ivt);
-
-						if (iss.peek() != '/') break; // v/t
+						transformIndex(indx);
+						f.TextureIndices.push_back(indx);
+						// v/t
+						//if (iss.peek() != '/') break; // v/t
 					}
-					// v//n or v/t/n
-					iss.ignore();
-					if (!(iss >> ivn)) throw "Error parsing face at line: " + lineNumber; // normal v
-					f.HasNormalVertices = true;
-
-					f.NormalIndices.push_back(ivn);
+					if (iss.peek() == '/') // check for second slash
+					{
+						iss.ignore(); // discard second slash
+						if (!(iss >> indx)) throw "Error parsing face at line: " + lineNumber; // normal v
+						f.HasNormalVertices = true;
+						transformIndex(indx);
+						f.NormalIndices.push_back(indx);
+						// v/t/n OR v//n
+					}
 				}
 
-				while (iss.peek() != EOF)
+				while (iss.peek() != EOF) // comtinue reading the rest of face indexes
 				{
-					if (!(iss >> iv)) break;
-					f.VertexIndices.push_back(iv);
+					if (!(iss >> indx)) break;
+					transformIndex(indx);
+					f.VertexIndices.push_back(indx);
 					iss.ignore(); // first / or space
 					if (f.HasTextureVertices)
 					{
-						if (!(iss >> ivt)) break;
-						f.TextureIndices.push_back(ivt);
+						if (!(iss >> indx)) break;
+						transformIndex(indx);
+						f.TextureIndices.push_back(indx);
 					}
 					if (f.HasNormalVertices)
 					{
 						iss.ignore(); // second /
-						if (!(iss >> ivn)) break;
-						f.NormalIndices.push_back(ivn);
+						if (!(iss >> indx)) break;
+						transformIndex(indx);
+						f.NormalIndices.push_back(indx);
 					}
 				}
 
@@ -179,27 +193,26 @@ std::vector<GeometryData*> OBJFileParser::GetTriangualizedObjects()
 
 		for (auto face : obj->Faces)
 		{
-			//gd.Faces = TriangulateFace(face);
 			for (unsigned int i = 2; i < face.VertexIndices.size(); i++)
 			{
 				Face3 f3;
-				f3.VertexCoords[0] = obj->FileVertices[face.VertexIndices[0] - 1]; // -1 for .obj file indexes
-				f3.VertexCoords[1] = obj->FileVertices[face.VertexIndices[i - 1] - 1];
-				f3.VertexCoords[2] = obj->FileVertices[face.VertexIndices[i] - 1];
+				f3.VertexCoords[0] = obj->FileVertices[face.VertexIndices[0]];
+				f3.VertexCoords[1] = obj->FileVertices[face.VertexIndices[i - 1]];
+				f3.VertexCoords[2] = obj->FileVertices[face.VertexIndices[i]];
 
 				if (face.HasTextureVertices)
 				{
 					gd->HasTextureVertices = true;
-					f3.TextureCoords[0] = obj->FileTextureVertices[face.TextureIndices[0] - 1];
-					f3.TextureCoords[1] = obj->FileTextureVertices[face.TextureIndices[i - 1] - 1];
-					f3.TextureCoords[2] = obj->FileTextureVertices[face.TextureIndices[i] - 1];
+					f3.TextureCoords[0] = obj->FileTextureVertices[face.TextureIndices[0]];
+					f3.TextureCoords[1] = obj->FileTextureVertices[face.TextureIndices[i - 1]];
+					f3.TextureCoords[2] = obj->FileTextureVertices[face.TextureIndices[i]];
 				}
 				if (face.HasNormalVertices)
 				{
 					gd->HasNormalVertices = true;
-					f3.NormalCoords[0] = obj->FileNormalVertices[face.NormalIndices[0] - 1];
-					f3.NormalCoords[1] = obj->FileNormalVertices[face.NormalIndices[i - 1] - 1];
-					f3.NormalCoords[2] = obj->FileNormalVertices[face.NormalIndices[i] - 1];
+					f3.NormalCoords[0] = obj->FileNormalVertices[face.NormalIndices[0]];
+					f3.NormalCoords[1] = obj->FileNormalVertices[face.NormalIndices[i - 1]];
+					f3.NormalCoords[2] = obj->FileNormalVertices[face.NormalIndices[i]];
 				}
 
 				gd->TriangleMesh.push_back(f3);
