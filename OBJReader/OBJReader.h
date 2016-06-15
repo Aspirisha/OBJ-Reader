@@ -23,7 +23,7 @@ namespace OBJReaderDLL
 		OBJReader();
 		~OBJReader();
 
-		static OBJREADER_API std::vector<GeometryData*> getGeometryData(const char* filename); // should not be std::vector
+		static OBJREADER_API std::vector<GeometryData*> getGeometryData(const char* filename);
 
 	private:
 

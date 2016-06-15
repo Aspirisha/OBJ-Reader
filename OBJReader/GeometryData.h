@@ -16,7 +16,7 @@ public:
 	std::string Material;
 
 	bool HasTextureVertices = false;
-	bool HasNormalVertices = false; // change to bitmask?
+	bool HasNormalVertices = false;
 
 	std::vector<Face3> TriangleMesh;
 

@@ -23,7 +23,7 @@ void Read(string s)
 			int faceNumber = 0;
 			for (auto var : ob->TriangleMesh)
 			{
-				cout << "Fejs " << ++faceNumber << ":" << endl;
+				cout << "Face " << ++faceNumber << ":" << endl;
 				//cout << "Wspolrzedne wiercholkow: ";
 				for (int i = 0; i < 3; i++)
 					cout << "V" << i + 1 << " (" << var.VertexCoords[i].x << ", " << var.VertexCoords[i].y << ", " << var.VertexCoords[i].z << "), ";

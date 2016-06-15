@@ -11,5 +11,4 @@ std::string OBJData::MaterialLibrary;
 
 OBJData::OBJData()
 {
-	//Vertices[1].
 }
