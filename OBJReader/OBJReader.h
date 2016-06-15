@@ -16,6 +16,9 @@
 
 namespace OBJReaderDLL
 {
+	/**
+	* Klasa stanowi¹ca interfejs DLL
+	*/
 	class OBJReader
 	{
 	public:
@@ -23,6 +26,11 @@ namespace OBJReaderDLL
 		OBJReader();
 		~OBJReader();
 
+		/**
+		* Metoda g³ówna, s³u¿¹ca do pobrania danych z pliku .OBJ
+		* @param filename Œcie¿ka do pliku .OBJ
+		* @return Kontener obiektów odpowiadaj¹cych powierzchniom teksturowanym obiektu z pliku .OBJ
+		*/
 		static OBJREADER_API std::vector<GeometryData*> getGeometryData(const char* filename);
 
 	private:
