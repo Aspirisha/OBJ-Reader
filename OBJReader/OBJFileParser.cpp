@@ -161,7 +161,7 @@ void OBJFileParser::ReadFile(std::string filepath)
 				OBJData::Name = objName;
 
 			}
-			else if (keyword == "mtlib")
+			else if (keyword == "mtllib")
 			{
 				if (!(iss >> materialLib)) throw "Error parsing mtlib at line: " + lineNumber;
 				OBJData::MaterialLibrary = materialLib;
@@ -189,6 +189,10 @@ std::vector<GeometryData*> OBJFileParser::GetTriangualizedObjects()
 		if (!obj->Material.empty())
 		{
 			gd->Material = obj->Material;
+		}
+		if (!obj->MaterialLibrary.empty())
+		{
+			gd->MaterialLibrary = obj->MaterialLibrary;
 		}
 
 		for (auto face : obj->Faces)

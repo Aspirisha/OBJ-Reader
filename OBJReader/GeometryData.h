@@ -25,6 +25,11 @@ public:
 	std::string Material;
 
 	/**
+	* Nazwa pliku zawieraj¹cego definicje materia³ów
+	*/
+	std::string MaterialLibrary;
+
+	/**
 	* Flaga informuj¹ca czy obiekt zawiera wierzcho³ki dla tekstur
 	*/
 	bool HasTextureVertices = false;

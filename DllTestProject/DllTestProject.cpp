@@ -17,6 +17,7 @@ void Read(string s)
 	}
 	else
 	{
+		cout << "Nazwa pliku z teksturami: " << objects.front()->MaterialLibrary << endl;
 		for (auto ob : objects)
 		{
 			cout << "\tTekstura obiektu: " << ob->Material << endl;
