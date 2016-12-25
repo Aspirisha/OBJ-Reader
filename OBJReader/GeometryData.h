@@ -1,7 +1,7 @@
 #pragma once
 
-#include "libs/glm/vec2.hpp"
-#include "libs/glm/vec3.hpp"
+#include <glm/vec2.hpp>
+#include <glm/vec3.hpp>
 #include <vector>
 #include <string>
 

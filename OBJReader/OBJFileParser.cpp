@@ -1,5 +1,6 @@
 
 #include "OBJFileParser.h"
+#include <algorithm>
 
 std::vector<OBJData*> OBJFileParser::Objects;
 
@@ -41,7 +42,7 @@ void OBJFileParser::ReadFile(std::string filepath)
 
 		while (std::getline(file, line))
 		{
-			if (line.empty()) continue; // blank line
+			if (std::all_of(line.begin(),line.end(),[](char c) {return isspace(c); })) continue; // blank line
 			std::istringstream iss(line);
 			lineNumber++;
 
@@ -50,7 +51,6 @@ void OBJFileParser::ReadFile(std::string filepath)
 
 			if (!(iss >> keyword))
 			{
-				if (line[0] == ' ') continue;
 				throw "Error reading file at line: " + std::to_string(lineNumber);
 				break;
 			}

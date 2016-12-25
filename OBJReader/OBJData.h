@@ -1,54 +1,54 @@
 #pragma once
 
-#include "libs/glm/vec2.hpp"
-#include "libs/glm/vec3.hpp"
+#include <glm/vec2.hpp>
+#include <glm/vec3.hpp>
 #include <vector>
 
 /**
-* Struktura przechowuj¹ca dane elementów typu Face o dowolnej liczbie wierzcho³ków.
-* Elementy typu Face definiuj¹ po³¹czenia miêdzy wierzcho³kami sk³adaj¹cymi siê na obiekt.
+* Struktura przechowujï¿½ca dane elementï¿½w typu Face o dowolnej liczbie wierzchoï¿½kï¿½w.
+* Elementy typu Face definiujï¿½ poï¿½ï¿½czenia miï¿½dzy wierzchoï¿½kami skï¿½adajï¿½cymi siï¿½ na obiekt.
 */
 struct FaceN
 {
 	/**
-	* Flaga informuj¹ca czy element zawiera wierzcho³ki dla tekstur
+	* Flaga informujï¿½ca czy element zawiera wierzchoï¿½ki dla tekstur
 	*/
 	bool HasTextureVertices = false;
 	/**
-	* Flaga informuj¹ca czy element zawiera normalne
+	* Flaga informujï¿½ca czy element zawiera normalne
 	*/
 	bool HasNormalVertices = false;
 
 	/**
-	* Kontener przechowuj¹cy wspó³rzêdne zwyk³ych wierzcho³ków sk³adaj¹cych siê na element
+	* Kontener przechowujï¿½cy wspï¿½rzï¿½dne zwykï¿½ych wierzchoï¿½kï¿½w skï¿½adajï¿½cych siï¿½ na element
 	*/
 	std::vector<int> VertexIndices;
 	/**
-	* Kontener przechowuj¹cy wspó³rzêdne normalnych sk³adaj¹cych siê na element
+	* Kontener przechowujï¿½cy wspï¿½rzï¿½dne normalnych skï¿½adajï¿½cych siï¿½ na element
 	*/
 	std::vector<int> NormalIndices;
 	/**
-	* Kontener przechowuj¹cy wspó³rzêdne wierzcho³ków dla tekstur sk³adaj¹cych siê na element
+	* Kontener przechowujï¿½cy wspï¿½rzï¿½dne wierzchoï¿½kï¿½w dla tekstur skï¿½adajï¿½cych siï¿½ na element
 	*/
 	std::vector<int> TextureIndices;
 };
 
 /**
-* Klasa reprezentuj¹ca obiekty podzielone wg u¿ywanych tekstur, wczytane bezpoœrednio z pliku .OBJ 
+* Klasa reprezentujï¿½ca obiekty podzielone wg uï¿½ywanych tekstur, wczytane bezpoï¿½rednio z pliku .OBJ 
 */
 class OBJData
 {
 public:
 	/**
-	* Kontener przechowuj¹cy listê wszytykich zwyk³ych wierzcho³ków w danym pliku
+	* Kontener przechowujï¿½cy listï¿½ wszytykich zwykï¿½ych wierzchoï¿½kï¿½w w danym pliku
 	*/
 	static std::vector<glm::vec3> FileVertices;
 	/**
-	* Kontener przechowuj¹cy listê wszytykich normalnych w danym pliku
+	* Kontener przechowujï¿½cy listï¿½ wszytykich normalnych w danym pliku
 	*/
 	static std::vector<glm::vec3> FileNormalVertices;
 	/**
-	* Kontener przechowuj¹cy listê wszytykich wierzcho³ków dla tekstur w danym pliku
+	* Kontener przechowujï¿½cy listï¿½ wszytykich wierzchoï¿½kï¿½w dla tekstur w danym pliku
 	*/
 	static std::vector<glm::vec2> FileTextureVertices;
 
@@ -57,16 +57,16 @@ public:
 	*/
 	static std::string Name;
 	/**
-	* Nazwa pliku zawieraj¹cego definicje materia³ów (tekstur)
+	* Nazwa pliku zawierajï¿½cego definicje materiaï¿½ï¿½w (tekstur)
 	*/
 	static std::string MaterialLibrary;
 
 	/**
-	* Nazwa materia³u u¿ywanego przez obiekt
+	* Nazwa materiaï¿½u uï¿½ywanego przez obiekt
 	*/
 	std::string Material;
 	/**
-	* Kontener reprezentuj¹cy siatkê (mesh) obiektu za pomoc¹ elementów typu Face
+	* Kontener reprezentujï¿½cy siatkï¿½ (mesh) obiektu za pomocï¿½ elementï¿½w typu Face
 	*/
 	std::vector<FaceN> Faces;
 
