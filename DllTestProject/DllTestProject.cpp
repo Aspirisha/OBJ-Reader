@@ -1,7 +1,6 @@
 // DllTestProject.cpp : Defines the entry point for the console application.
 //
 
-#include "stdafx.h"
 #include <iostream>
 #include "OBJReader.h"
 
@@ -54,14 +53,14 @@ void Read(string s)
 int main()
 {
 	vector<string> s;
-	s.push_back( "res\\diamond.obj");
-	s.push_back("res\\cube no tx.obj");
-	s.push_back("res\\cube.obj");
-	s.push_back("res\\cube multi material.obj");
-	s.push_back("res\\negative.obj");
-	s.push_back("res\\capsule.obj"); // big
-	s.push_back("res\\beretta magazine.obj");
-	s.push_back("res\\skyscraper.obj");
+	s.push_back( "res/diamond.obj");
+	s.push_back("res/cube no tx.obj");
+	s.push_back("res/cube.obj");
+	s.push_back("res/cube multi material.obj");
+	s.push_back("res/negative.obj");
+	s.push_back("res/capsule.obj"); // big
+	s.push_back("res/beretta magazine.obj");
+	s.push_back("res/skyscraper.obj");
 
 	int input;
 	while (true)

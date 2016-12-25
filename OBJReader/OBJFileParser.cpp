@@ -1,4 +1,4 @@
-#include "stdafx.h"
+
 #include "OBJFileParser.h"
 
 std::vector<OBJData*> OBJFileParser::Objects;

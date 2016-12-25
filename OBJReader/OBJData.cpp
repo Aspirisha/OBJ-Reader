@@ -1,4 +1,4 @@
-#include "stdafx.h"
+#include <string>
 #include "OBJData.h"
 
 

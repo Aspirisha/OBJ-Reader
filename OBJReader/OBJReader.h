@@ -1,11 +1,5 @@
 #pragma once
 
-#ifdef OBJREADER_EXPORTS
-#define OBJREADER_API __declspec(dllexport)
-#else
-#define OBJREADER_API __declspec(dllimport)
-#endif
-
 #include <string>
 #include <fstream>
 #include <sstream>
@@ -17,7 +11,7 @@
 namespace OBJReaderDLL
 {
 	/**
-	* Klasa stanowi¹ca interfejs DLL
+	* Klasa stanowiï¿½ca interfejs DLL
 	*/
 	class OBJReader
 	{
@@ -27,11 +21,11 @@ namespace OBJReaderDLL
 		~OBJReader();
 
 		/**
-		* Metoda g³ówna, s³u¿¹ca do pobrania danych z pliku .OBJ
-		* @param filename Œcie¿ka do pliku .OBJ
-		* @return Kontener obiektów odpowiadaj¹cych powierzchniom teksturowanym obiektu z pliku .OBJ
+		* Metoda gï¿½ï¿½wna, sï¿½uï¿½ï¿½ca do pobrania danych z pliku .OBJ
+		* @param filename ï¿½cieï¿½ka do pliku .OBJ
+		* @return Kontener obiektï¿½w odpowiadajï¿½cych powierzchniom teksturowanym obiektu z pliku .OBJ
 		*/
-		static OBJREADER_API std::vector<GeometryData*> getGeometryData(const char* filename);
+		static std::vector<GeometryData*> getGeometryData(const char* filename);
 
 	private:
 
